@@ -13,13 +13,11 @@ For Eg Case 1:
 import sys
 
 
-num_dict = {}
 arr = sys.argv[1].split()
 arr = [int(num) for num in arr]
 maximum = 0
 minimum = 99999999999999
 for num in arr:
-    num_dict[num] = True
     if num > maximum:
         maximum: maximum = num
     if num < minimum and num > 0:

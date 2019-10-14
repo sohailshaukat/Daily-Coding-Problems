@@ -27,9 +27,16 @@ def folderLevelGenerator(dir):
     return level
 
 
-def longestPath():
+def longestPath(dir):
     # recursive function to be added here
-    pass
+    if dir.subfolders == [] or dir.subfolders == None:
+        return 1,dir.name
+    else:
+        current = dir
+        path = []
+        for subfolder in current.subfolders:
+            pass
+        pass
 
 
 path = r"dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
@@ -53,9 +60,9 @@ for index, folder in enumerate(folder_stack):
     while folder.parent == None and ptr >= 0:
         if tree_stack[ptr].level == parent_level:
             folder_stack[index].parent = tree_stack[ptr]
-            tree_stack[ptr].subfolders.append(folder)
+            tree_stack[ptr].addFolder(folder)
             tree_stack.append(folder)
             break
         ptr -= 1
 
-longest_path = longestPath(tree_stack[0])
+

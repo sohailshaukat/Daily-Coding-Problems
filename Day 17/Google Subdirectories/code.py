@@ -26,8 +26,11 @@ def folderLevelGenerator(dir):
         ptr += 2
     return level
 
-def longest_path():
+
+def longestPath():
+    # recursive function to be added here
     pass
+
 
 path = r"dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
 path = path.split('\\n')

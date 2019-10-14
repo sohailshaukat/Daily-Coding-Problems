@@ -16,7 +16,7 @@ class House:
         return cost
 
     def paint(self, color):
-        print(f"Painting House at index {str(index)}")
+        print(f"Painting House at index {str(index)} {color}")
         self.color = color
 
 

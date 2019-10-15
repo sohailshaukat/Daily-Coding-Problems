@@ -3,6 +3,7 @@ class Folder():
 
     def __init__(self, name, subfolders=[], level=0, parent=None, type='directory'):
         self.name = name
+        self.path = ''
         self.subfolders = subfolders
         self.level = level
         self.parent = parent
@@ -10,6 +11,15 @@ class Folder():
 
     def addFolder(self, newfolder):
         self.subfolders.append(newfolder)
+
+    def pathEvaluator(self):
+        current = self
+        path = ['dir']
+        while current.name != 'dir':
+            path.insert(1, current.name)
+            if current.parent:
+                current = current.parent
+        self.path = '\\'.join(path)
 
 
 class File(Folder):
@@ -27,16 +37,15 @@ def folderLevelGenerator(dir):
     return level
 
 
-def longestPath(dir):
+def longestPath(tree_heap):
     # recursive function to be added here
-    if dir.subfolders == [] or dir.subfolders == None:
-        return 1,dir.name
-    else:
-        current = dir
-        path = []
-        for subfolder in current.subfolders:
-            pass
-        pass
+    maximum_path_length = 0
+    max_path_index = 0
+    for index, dir in enumerate(tree_heap):
+        if len(dir.path) > maximum_path_length and dir.type == 'File':
+            maximum_path_length = len(dir.path)
+            max_path_index = index
+    return tree_heap[index].path
 
 
 path = r"dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
@@ -52,17 +61,17 @@ for dir in path:
         folder_stack.append(Folder(name=dir_name, level=dir_level))
     ptr += 1
 parent = folder_stack[0]
-tree_stack = [parent]
+tree_heap = [parent]
 del folder_stack[0]
 for index, folder in enumerate(folder_stack):
     parent_level = folder.level - 1
-    ptr = len(tree_stack) - 1
+    ptr = len(tree_heap) - 1
     while folder.parent == None and ptr >= 0:
-        if tree_stack[ptr].level == parent_level:
-            folder_stack[index].parent = tree_stack[ptr]
-            tree_stack[ptr].addFolder(folder)
-            tree_stack.append(folder)
+        if tree_heap[ptr].level == parent_level:
+            folder_stack[index].parent = tree_heap[ptr]
+            folder_stack[index].pathEvaluator()
+            tree_heap[ptr].addFolder(folder)
+            tree_heap.append(folder)
             break
         ptr -= 1
-
-
+print(longestPath(tree_heap))

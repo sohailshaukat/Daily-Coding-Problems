@@ -1,10 +1,10 @@
 #! python3
 
 grid = [[0,0,0,0,0],
-        [1,1,1,1,1],
+        [1,0,1,1,1],
         [1,0,1,0,1],
-        [0,1,0,1,0],
-        [1,1,1,1,0]]
+        [0,1,1,1,0],
+        [1,0,1,1,0]]
 
 
 class Path:
@@ -24,10 +24,13 @@ class Path:
     def upPathCalculator(grid, anchor):
         i,j = anchor
         length = 0
-        while grid[i][j] == 1:
+        while grid[i][j] == 1 and i > -1:
             length += 1
             i -= 1
-            if not grid[i][j]:
+            try:
+                if not grid[i][j]:
+                    break
+            except:
                 break
         return Path(anchor, True, length)
             
@@ -35,7 +38,7 @@ class Path:
     def leftPathCalculator(grid, anchor):
         i,j = anchor
         length = 0
-        while grid[i][j] == 1:
+        while grid[i][j] == 1 and j > -1:
             length += 1
             j -= 1
             try:
@@ -43,18 +46,15 @@ class Path:
                     pass
             except:
                 break
-        return Path(anchor, True, length)
+        return Path(anchor, False, length)
     
     def pathPainter(self, grid):
         grid = [ [ 'W' for el in ( grid[0] ) ] for row in grid ]
         i,j = self.anchor
         length = self.length
         if self.direction:
-            while length > 0:
-                try:
-                    grid[i][j] = 'L'
-                except:
-                    break
+            while length:
+                grid[i][j] = 'L'
                 i -= 1
                 length -= 1
         else:
@@ -77,4 +77,4 @@ for path in paths:
         maximum_runway_length = path.length
         maximum_runway_path = path
 grid = maximum_runway_path.pathPainter(grid)
-print(grid)
+print(*grid, sep = '\n')

@@ -10,4 +10,4 @@ lecture_times = [(30, 75), (0, 50), (60, 150)]
 for lec_duration in lecture_times:
     lectures.append(Lecture((lec_duration)))
     
-print(lectures[1].timeperiod)
+

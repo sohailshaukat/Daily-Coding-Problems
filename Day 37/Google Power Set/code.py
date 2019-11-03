@@ -1,6 +1,4 @@
 #! python3
-import random
-
 arr = [1, 2, 3]
 
 stack = [{}]
